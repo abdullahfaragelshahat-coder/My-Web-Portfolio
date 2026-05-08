@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية المهندس عبد الله فرج | الدبلومة الشاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --html-clr: #e67e22;
+            --css-clr: #3498db;
+            --php-clr: #8e44ad;
+            --dark: #1e272e;
+            --light: #f1f2f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--light); color: var(--dark); scroll-behavior: smooth; }
+
+        /* البروفايل */
+        .engineer-header {
+            background: linear-gradient(135deg, var(--dark) 0%, #2f3542 100%);
+            color: white; padding: 60px 8%; display: flex; align-items: center; gap: 40px;
+        }
+        .profile-img {
+            width: 180px; height: 180px; border-radius: 20px; 
+            border: 4px solid var(--css-clr); object-fit: cover;
+            transform: rotate(-3deg); transition: 0.3s;
+        }
+        .profile-img:hover { transform: rotate(0deg) scale(1.05); }
+        .header-text h1 { font-size: 3rem; margin-bottom: 10px; }
+        .header-text p { font-size: 1.3rem; color: var(--css-clr); font-weight: bold; }
+
+        /* التنقل */
+        .nav-bar {
+            background: white; padding: 10px 8%; position: sticky; top: 0; 
+            z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex; gap: 15px; overflow-x: auto;
+        }
+        .nav-btn {
+            text-decoration: none; padding: 10px 25px; border-radius: 8px;
+            font-weight: bold; color: var(--dark); border: 2px solid #eee; transition: 0.3s;
+        }
+        .nav-btn.html-btn:hover { background: var(--html-clr); color: white; border-color: var(--html-clr); }
+        .nav-btn.css-btn:hover { background: var(--css-clr); color: white; border-color: var(--css-clr); }
+        .nav-btn.php-btn:hover { background: var(--php-clr); color: white; border-color: var(--php-clr); }
+
+        /* الحاويات */
+        .container { padding: 80px 8%; }
+        .track-head { margin-bottom: 40px; border-right: 10px solid; padding-right: 20px; }
+        
+        .weeks-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+        }
+
+        .week-box {
+            background: white; padding: 25px; border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;
+            border-bottom: 4px solid #eee; transition: 0.3s;
+        }
+        .week-box:hover { transform: translateY(-10px); }
+        .week-box h4 { color: #777; font-size: 0.9rem; margin-bottom: 10px; }
+        .week-box h3 { margin-bottom: 15px; font-size: 1.2rem; }
+        .week-box ul { list-style: none; font-size: 0.9rem; opacity: 0.8; }
+        .week-box ul li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .week-box ul li::before { content: '◈'; }
+
+        /* ألوان المسارات */
+        .html-track .track-head { border-color: var(--html-clr); color: var(--html-clr); }
+        .html-track .week-box:hover { border-color: var(--html-clr); }
+
+        .css-track .track-head { border-color: var(--css-clr); color: var(--css-clr); }
+        .css-track .week-box:hover { border-color: var(--css-clr); }
+
+        .php-track .track-head { border-color: var(--php-clr); color: var(--php-clr); }
+        .php-track .week-box:hover { border-color: var(--php-clr); }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 40px; }
+    </style>
+</head>
+<body>
+
+    <header class="engineer-header">
+        <img src="Abdullah.png" alt="المهندس عبد الله فرج" class="profile-img">
+        <div class="header-text">
+            <h1>المهندس عبد الله فرج</h1>
+            <p>خبير تطوير الويب | Full-Stack Roadmap 2026</p>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <a href="#html" class="nav-btn html-btn">HTML5 (5 أسابيع)</a>
+        <a href="#css" class="nav-btn css-btn">CSS3 (10 أسابيع)</a>
+        <a href="#php" class="nav-btn php-btn">PHP (12 أسبوع)</a>
+    </nav>
+
+    <section class="container html-track" id="html">
+        <div class="track-head"><h2>مسار الـ HTML5 (تأسيس الهيكل)</h2></div>
+        <div class="weeks-grid">
+            <div class="week-box"><h4>الأسبوع 1</h4><h3>المقدمة والعناصر الأساسية</h3><ul><li>إعداد البيئة (VS Code)</li><li>Headings & Paragraphs</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 2</h4><h3>القوائم والروابط</h3><ul><li>Lists & Hyperlinks</li><li>Absolute vs Relative Paths</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 3</h4><h3>الوسائط المتعددة</h3><ul><li>Images & SVG</li><li>Audio & Video Tags</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 4</h4><h3>الجداول والنماذج</h3><ul><li>Tables Structure</li><li>Inputs & Forms Validation</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 5</h4><h3>HTML5 Semantic</h3><ul><li>Structure Tags (Header, Footer)</li><li>SEO Basics</li></ul></div>
+        </div>
+    </section>
+
+    <section class="container css-track" id="css" style="background: #fff;">
+        <div class="track-head"><h2>مسار الـ CSS3 (فن التصميم)</h2></div>
+        <div class="weeks-grid">
+            <div class="week-box"><h4>الأسبوع 1</h4><h3>الأساسيات</h3><ul><li>Selectors & Cascading</li><li>Colors & Backgrounds</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 2</h4><h3>Box Model</h3><ul><li>Margin, Padding, Border</li><li>Display Property</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 3</h4><h3>Positions</h3><ul><li>Relative, Absolute, Fixed</li><li>Z-index</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 4</h4><h3>Flexbox - الجزء 1</h3><ul><li>Flex Container properties</li><li>Aligning items</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 5</h4><h3>Flexbox - الجزء 2</h3><ul><li>Flex Child properties</li><li>Real World Examples</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 6</h4><h3>CSS Grid</h3><ul><li>Grid Template Columns/Rows</li><li>Grid Areas</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 7</h4><h3>Responsive Design</h3><ul><li>Media Queries</li><li>Mobile First Approach</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 8</h4><h3>Animations</h3><ul><li>Transitions</li><li>Keyframes</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 9</h4><h3>CSS Variables</h3><ul><li>Custom Properties</li><li>Dark Mode Logic</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 10</h4><h3>مشروع التخرج</h3><ul><li>تصميم واجهة كاملة احترافية</li></ul></div>
+        </div>
+    </section>
+
+    <section class="container php-track" id="php">
+        <div class="track-head"><h2>مسار الـ PHP (البرمجة والمنطق)</h2></div>
+        <div class="weeks-grid">
+            <div class="week-box"><h4>الأسبوع 1</h4><h3>أساسيات الـ Backend</h3><ul><li>XAMPP Setup</li><li>Variables & Data Types</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 2</h4><h3>العمليات والمنطق</h3><ul><li>Operators</li><li>If Statements & Switch</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 3</h4><h3>الحلقات التكرارية</h3><ul><li>For, While, Do While</li><li>Foreach Loop</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 4</h4><h3>الدوال (Functions)</h3><ul><li>Built-in Functions</li><li>User Defined Functions</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 5</h4><h3>المصفوفات المتقدمة</h3><ul><li>Associative Arrays</li><li>Multidimensional Arrays</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 6</h4><h3>Superglobals</h3><ul><li>$_GET & $_POST</li><li>$_SERVER & $_SESSION</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 7</h4><h3>التعامل مع الملفات</h3><ul><li>Upload Files</li><li>Filesystem Functions</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 8</h4><h3>MySQL - الجزء 1</h3><ul><li>Database Design</li><li>SQL Queries (Select, Insert)</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 9</h4><h3>MySQL - الجزء 2</h3><ul><li>Update & Delete</li><li>Joins Basics</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 10</h4><h3>CRUD System</h3><ul><li>ربط PHP بـ MySQL</li><li>مشروع إدارة بيانات</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 11</h4><h3>Security</h3><ul><li>Password Hashing</li><li>SQL Injection Protection</li></ul></div>
+            <div class="week-box"><h4>الأسبوع 12</h4><h3>مشروع النهاية</h3><ul><li>بناء موقع تفاعلي كامل</li></ul></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>بوابة المهندس عبد الله فرج التعليمية © 2026</p>
+        <p style="margin-top: 10px; font-size: 13px; opacity: 0.6;">العلم يحتاج صبراً، والنتيجة تستحق العناء.</p>
+    </footer>
+
+</body>
+</html>

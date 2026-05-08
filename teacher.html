@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مهندس عبد الله فرج | ملك الرياضيات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --math-blue: #0984e3;
+            --math-dark: #2d3436;
+            --math-green: #00b894;
+            --accent: #fdcb6e;
+            --white: #ffffff;
+            --light-gray: #f9f9f9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--light-gray); color: var(--math-dark); scroll-behavior: smooth; overflow-x: hidden; }
+
+        /* القائمة العلوية */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 8%; background: var(--math-blue); color: white;
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .logo { font-size: 22px; font-weight: 900; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; }
+        nav ul li a:hover { color: var(--accent); }
+
+        /* قسم الهيرو (السبورة) */
+        .hero {
+            height: 75vh; background: linear-gradient(rgba(45, 52, 54, 0.85), rgba(45, 52, 54, 0.85)), url('https://img.freepik.com/free-photo/mathematical-formulas-on-blackboard_23-2148177539.jpg');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: white; padding: 0 5%;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 10px; font-weight: 900; }
+        .hero p { font-size: 1.6rem; color: var(--accent); font-weight: bold; max-width: 600px; }
+        .math-icon { font-size: 60px; margin-bottom: 25px; animation: bounce 2.5s infinite; color: var(--accent); }
+        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-15px);} }
+
+        /* الأقسام الدراسية */
+        .classes { padding: 100px 8%; background-color: var(--white); }
+        .section-title { text-align: center; margin-bottom: 60px; font-size: 2.8rem; color: var(--math-blue); font-weight: 900; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .class-card {
+            background: var(--light-gray); padding: 40px; border-radius: 25px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-bottom: 6px solid transparent;
+            transition: 0.4s ease;
+        }
+        .class-card:hover { 
+            transform: translateY(-12px); 
+            background: var(--math-blue); 
+            color: white; 
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(9, 132, 227, 0.2);
+        }
+        .class-card:hover h3, .class-card:hover p { color: white; }
+        .class-card h3 { font-size: 24px; margin-bottom: 15px; color: var(--math-blue); font-weight: 700; }
+        .class-card p { font-size: 15px; color: #636e72; line-height: 1.8; }
+
+        /* جدول الحصص */
+        .schedule { padding: 100px 8%; background: var(--math-dark); color: white; }
+        .schedule table { width: 100%; border-collapse: collapse; margin-top: 40px; background: rgba(255,255,255,0.03); border-radius: 15px; overflow: hidden; }
+        .schedule th, .schedule td { padding: 18px; text-align: center; border: 1px solid rgba(255,255,255,0.08); }
+        .schedule th { background: var(--math-blue); font-weight: 700; color: white; }
+        .schedule tr:hover td { background: rgba(255,255,255,0.05); }
+
+        /* بنك الأسئلة (الروشنة) */
+        .quiz-box {
+            margin: 100px 8%; padding: 50px; background: var(--white);
+            border-radius: 30px; border: 3px dashed var(--math-blue); text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .quiz-box::after { content: '∑'; position: absolute; font-size: 250px; color: rgba(9, 132, 227, 0.03); top: -60px; right: -40px; z-index: 0; }
+        .quiz-box h2 { position: relative; z-index: 1; margin-bottom: 25px; color: var(--math-dark); }
+        .quiz-btn {
+            display: inline-block; padding: 18px 50px; background: var(--math-green); color: white;
+            text-decoration: none; border-radius: 50px; font-weight: bold; position: relative; z-index: 1;
+            box-shadow: 0 8px 20px rgba(0,184,148,0.25); transition: 0.3s ease;
+        }
+        .quiz-btn:hover { transform: scale(1.05); background: #00a087; box-shadow: 0 10px 25px rgba(0,184,148,0.35); }
+
+        /* القسم الجديد: كلمة مستر عبد الله (مع الصورة) */
+        .teacher-word {
+            padding: 100px 8%;
+            background: linear-gradient(135deg, var(--math-blue), var(--math-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap; /* للتجاوب مع الموبايل */
+            justify-content: center;
+        }
+
+        .teacher-img-container {
+            flex-shrink: 0;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%; /* شكل دائري */
+            overflow: hidden;
+            border: 10px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .teacher-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* لضمان ملء الصورة للدائرة دون تشويه */
+            display: block;
+        }
+
+        .word-content {
+            flex: 1;
+            min-width: 300px;
+            text-align: justify;
+        }
+
+        .word-content h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-weight: 900;
+        }
+
+        .word-content p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .word-content .signature {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-align: left; /* التوقيع لليسار */
+            margin-top: 30px;
+        }
+
+        /* الفوتر */
+        footer { padding: 50px 8%; text-align: center; background: var(--math-dark); color: rgba(255,255,255,0.6); font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer p { margin-bottom: 10px; }
+        footer .contact-info { color: var(--math-blue); font-weight: bold; font-size: 16px; text-decoration: none; }
+
+        /* التجاوب مع الموبايل */
+        @media (max-width: 768px) {
+            nav ul { display: none; } /* إخفاء القائمة في الموبايل لتبسيط التصميم */
+            .teacher-word { flex-direction: column; text-align: center; gap: 40px; }
+            .teacher-img-container { width: 220px; height: 220px; }
+            .word-content { text-align: center; }
+            .word-content h2 { font-size: 2rem; }
+            .word-content .signature { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">مهندس عبد الله فرج 📐</div>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#classes">المراحل</a></li>
+            <li><a href="#schedule">المواعيد</a></li>
+            <li><a href="#quiz">تحدي العباقرة</a></li>
+            <li><a href="#word">كلمة المهندس</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="math-icon">∫ √(x²)</div>
+        <h1>الرياضيات في جيبك!</h1>
+        <p>مع مهندس عبد الله فرج.. الرياضة بقت لعبة ممتعة</p>
+    </header>
+
+    <section class="classes" id="classes">
+        <h2 class="section-title">المراحل الدراسية</h2>
+        <div class="grid">
+            <div class="class-card">
+                <h3>الصف الأول الثانوي</h3>
+                <p>تأسيس قوي في الجبر وحساب المثلثات والهندسة، مع شرح مبسط لكل القوانين المعقدة.</p>
+            </div>
+            <div class="class-card">
+                <h3>الصف الثاني الثانوي</h3>
+                <p>التعمق في التفاضل والتكامل والدوال، وتحليل المعطيات بأسلوب "البرنس" المبتكر.</p>
+            </div>
+            <div class="class-card">
+                <h3>الصف الثالث الثانوي</h3>
+                <p>كورس المراجعة النهائية (الوحش) - تأهيل كامل وشامل لامتحان الثانوية العامة.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="schedule" id="schedule">
+        <h2 class="section-title" style="color: white;">جدول المواعيد 📅</h2>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>اليوم</th>
+                        <th>الصف الدراسي</th>
+                        <th>الوقت</th>
+                        <th>المكان / السنتر</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>السبت</td>
+                        <td>ثالثة ثانوي (علمي رياضه)</td>
+                        <td>04:00 م</td>
+                        <td>سنتر الأوائل</td>
+                    </tr>
+                    <tr>
+                        <td>الأحد</td>
+                        <td>أولى ثانوي</td>
+                        <td>02:00 م</td>
+                        <td>أونلاين (Zoom)</td>
+                    </tr>
+                    <tr>
+                        <td>الاثنين</td>
+                        <td>ثانية ثانوي</td>
+                        <td>06:00 م</td>
+                        <td>سنتر الرواد</td>
+                    </tr>
+                    <tr>
+                        <td>الأربعاء</td>
+                        <td>ثالثة ثانوي (مراجعة)</td>
+                        <td>08:00 م</td>
+                        <td>أونلاين (Zoom)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="quiz-box" id="quiz">
+        <h2>تحدي العباقرة (سؤال الأسبوع) 🧠</h2>
+        <p style="margin-bottom: 25px; color: #636e72;">سؤال صعب للطلاب المتميزين، أول واحد هيحله صح ليه جائزة خاصة في الحصة الجاية!</p>
+        <div style="font-size: 26px; font-weight: bold; margin: 30px 0; color: var(--math-blue); font-family: 'Courier New', Courier, monospace; direction: ltr;">
+            If: $x + \frac{1}{x} = 3$ <br>
+            Find: $x^2 + \frac{1}{x^2}$ ?
+        </div>
+        <a href="https://wa.me/20123456789" class="quiz-btn">إرسال الحل عبر الواتساب</a>
+    </div>
+
+    <section class="teacher-word" id="word">
+        <div class="teacher-img-container">
+            <img src="Abdullah.png" alt="مستر عبد الله فرج" class="teacher-img">
+        </div>
+        <div class="word-content">
+            <h2>الرياضيات ليست مجرد أرقام..</h2>
+            <p>أبنائي وبناتي الطلاب، الرياضيات ليست مادة للحفظ أو التعقيد، بل هي رياضة للعقل، تنمي التفكير النقدي وتحليل المشكلات. هدفي ليس مجرد حصولكم على الدرجة النهائية، بل أن تفهموا جمال المنطق وتستمتعوا بحل الألغاز البرمجية التي تقدمها لنا الطبيعة عبر الأرقام.</p>
+            <p>معاً، سنحول كل قانون معقد إلى قاعدة بسيطة، وكل مسألة صعبة إلى تحدٍ ممتع. ثقوا في قدراتكم، واجتهدوا، وأنا هنا دائماً لأكون دليلكم نحو النجاح والتميز.</p>
+            <div class="signature">محبكم، مهندس عبد الله فرج</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>حقوق النشر © 2026 | مهندس عبد الله فرح</p>
+        <p>للحجز والاستفسار، تواصل معنا: <a href="tel:01205156342" class="contact-info">01205156342</a></p>
+        <button type="submit" > سجل الان</button>
+    </footer>
+
+</body>
+</html>

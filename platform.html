@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeLearn — تعلم البرمجة</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0E1A;
+    --bg2: #0F1527;
+    --bg3: #141B30;
+    --card: #141B30;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00E5A0;
+    --accent2: #3B82F6;
+    --accent3: #A855F7;
+    --text: #E8EDF5;
+    --text2: #8B95A8;
+    --text3: #4B5563;
+    --font: 'IBM Plex Sans Arabic', sans-serif;
+    --mono: 'Fira Code', monospace;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== NOISE OVERLAY ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-bracket { color: var(--text3); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #0A0E1A !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; color: #0A0E1A !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .glow-1 { background: var(--accent); top: -100px; right: -100px; }
+  .glow-2 { background: var(--accent2); bottom: -100px; left: -200px; }
+  .glow-3 { background: var(--accent3); top: 50%; right: 30%; opacity: 0.06; }
+
+  .hero-content { position: relative; z-index: 1; max-width: 640px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.2);
+    color: var(--accent);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0A0E1A;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(0,229,160,0.25);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(0,229,160,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* Code window decoration */
+  .hero-code {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(420px, 42%);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    animation: fadeUp 0.8s 0.4s ease both;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  }
+
+  .code-bar {
+    background: var(--bg3);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #FF5F57; }
+  .dot-y { background: #FFBD2E; }
+  .dot-g { background: #28CA42; }
+
+  .code-filename {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text3);
+    margin-right: auto;
+  }
+
+  .code-body {
+    padding: 20px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .c-kw { color: #C792EA; }
+  .c-fn { color: #82AAFF; }
+  .c-str { color: #C3E88D; }
+  .c-num { color: #F78C6C; }
+  .c-cm { color: #546E7A; }
+  .c-var { color: var(--accent); }
+  .c-acc { color: var(--accent2); }
+
+  /* ===== STATS ===== */
+  .stats {
+    padding: 60px 5%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    background: var(--bg);
+    padding: 36px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 100px 5%; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ===== COURSES ===== */
+  #courses { background: var(--bg2); }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .course-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .course-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.14);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .course-banner {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .course-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    opacity: 0.12;
+  }
+
+  .banner-html { background: linear-gradient(135deg, #E34F26 0%, #F16529 100%); }
+  .banner-css  { background: linear-gradient(135deg, #2965F1 0%, #1572B6 100%); }
+  .banner-js   { background: linear-gradient(135deg, #F7DF1E 0%, #F0C40E 100%); }
+  .banner-php  { background: linear-gradient(135deg, #777BB4 0%, #4F5B93 100%); }
+  .banner-py   { background: linear-gradient(135deg, #3776AB 0%, #FFD43B 100%); }
+  .banner-sql  { background: linear-gradient(135deg, #00758F 0%, #F29111 100%); }
+
+  .course-body { padding: 20px; }
+
+  .course-level {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .level-beginner { background: rgba(0,229,160,0.1); color: var(--accent); }
+  .level-mid      { background: rgba(59,130,246,0.1); color: var(--accent2); }
+  .level-advanced { background: rgba(168,85,247,0.1); color: var(--accent3); }
+
+  .course-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .course-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .course-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--text3);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .course-meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* ===== PATH ===== */
+  #path { background: var(--bg); }
+
+  .path-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    max-width: 700px;
+  }
+
+  .path-steps::before {
+    content: '';
+    position: absolute;
+    right: 23px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  }
+
+  .path-step {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 600;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-1 { background: rgba(0,229,160,0.12); color: var(--accent); border: 1px solid rgba(0,229,160,0.3); }
+  .step-2 { background: rgba(59,130,246,0.12); color: var(--accent2); border: 1px solid rgba(59,130,246,0.3); }
+  .step-3 { background: rgba(168,85,247,0.12); color: var(--accent3); border: 1px solid rgba(168,85,247,0.3); }
+  .step-4 { background: rgba(249,115,22,0.12); color: #F97316; border: 1px solid rgba(249,115,22,0.3); }
+
+  .step-content h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .step-content p  { font-size: 14px; color: var(--text2); line-height: 1.6; }
+  .step-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .step-tag {
+    font-size: 11px;
+    font-family: var(--mono);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  /* ===== TESTIMONIALS ===== */
+  #testimonials { background: var(--bg2); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .testimonial-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .stars { color: #FBBF24; font-size: 14px; margin-bottom: 14px; letter-spacing: 2px; }
+
+  .testimonial-text {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .avatar-1 { background: rgba(0,229,160,0.15); }
+  .avatar-2 { background: rgba(59,130,246,0.15); }
+  .avatar-3 { background: rgba(168,85,247,0.15); }
+
+  .author-name { font-size: 14px; font-weight: 500; }
+  .author-role { font-size: 12px; color: var(--text3); }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    background: var(--bg);
+    padding: 100px 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(0,229,160,0.08) 0%, transparent 70%);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-section p {
+    font-size: 17px;
+    color: var(--text2);
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  /* ===== CONTACT ===== */
+  #contact { background: var(--bg2); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .contact-info h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+  .contact-info p  { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: var(--text2);
+    font-size: 14px;
+  }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .form-group { margin-bottom: 18px; }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: rgba(0,229,160,0.4);
+    box-shadow: 0 0 0 3px rgba(0,229,160,0.06);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-group select option { background: var(--bg2); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 5% 30px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-top: 14px;
+    max-width: 260px;
+  }
+
+  .footer-col h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 32px; height: 32px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--text2);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .hero { flex-direction: column; }
+    .hero-code { display: none; }
+    .hero-content { max-width: 100%; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .path-steps::before { right: 23px; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-bracket">{</span>CodeLearn<span class="logo-bracket">}</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#courses">الكورسات</a></li>
+    <li><a href="#path">مسار التعلم</a></li>
+    <li><a href="#testimonials">آراء الطلاب</a></li>
+    <li><a href="#contact">تواصل معنا</a></li>
+    <li><a href="#" class="nav-cta">ابدأ مجاناً</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+  <div class="hero-glow glow-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      أكثر من 12,000 طالب يتعلمون الآن
+    </div>
+    <h1>تعلّم البرمجة<br>من <span class="highlight">الصفر للاحتراف</span></h1>
+    <p>منصة تعليمية متخصصة في تعليم لغات البرمجة بالعربي — من HTML وCSS إلى PHP وLaravel وPython. مناهج عملية، مشاريع حقيقية، ومجتمع داعم.</p>
+    <div class="hero-btns">
+      <a href="#courses" class="btn-primary">استكشف الكورسات</a>
+      <a href="#path" class="btn-secondary">شوف مسار التعلم</a>
+    </div>
+  </div>
+
+  <div class="hero-code">
+    <div class="code-bar">
+      <span class="dot dot-r"></span>
+      <span class="dot dot-y"></span>
+      <span class="dot dot-g"></span>
+      <span class="code-filename">index.php</span>
+    </div>
+    <div class="code-body">
+      <div><span class="c-cm">// مرحباً بك في CodeLearn 👋</span></div>
+      <br>
+      <div><span class="c-kw">$</span><span class="c-var">student</span> = [</div>
+      <div>&nbsp;&nbsp;<span class="c-str">'name'</span> =&gt; <span class="c-str">'محمد'</span>,</div>
+      <div>&nbsp;&nbsp;<span class="c-str">'level'</span> =&gt; <span class="c-str">'مبتدئ'</span>,</div>
+      <div>&nbsp;&nbsp;<span class="c-str">'goal'</span>  =&gt; <span class="c-str">'مطور ويب'</span>,</div>
+      <div>];</div>
+      <br>
+      <div><span class="c-kw">function</span> <span class="c-fn">learnToCode</span>(<span class="c-acc">$student</span>) {</div>
+      <div>&nbsp;&nbsp;<span class="c-kw">return</span> <span class="c-str">'🚀 النجاح قادم!'</span>;</div>
+      <div>}</div>
+      <br>
+      <div><span class="c-fn">learnToCode</span>(<span class="c-var">$student</span>);</div>
+      <div><span class="c-cm">// output: 🚀 النجاح قادم!</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat fade-in">
+    <span class="stat-num">12k+</span>
+    <span class="stat-label">طالب مسجّل</span>
+  </div>
+  <div class="stat fade-in">
+    <span class="stat-num">48</span>
+    <span class="stat-label">كورس متاح</span>
+  </div>
+  <div class="stat fade-in">
+    <span class="stat-num">320+</span>
+    <span class="stat-label">درس مجاني</span>
+  </div>
+  <div class="stat fade-in">
+    <span class="stat-num">98%</span>
+    <span class="stat-label">نسبة الرضا</span>
+  </div>
+</div>
+
+<!-- COURSES -->
+<section id="courses">
+  <span class="section-label fade-in">// الكورسات</span>
+  <h2 class="section-title fade-in">ابدأ بأي لغة تحبها</h2>
+  <p class="section-desc fade-in">كل كورس مصمم بعناية ليأخذك من الصفر للاحتراف مع أمثلة عملية ومشاريع حقيقية.</p>
+
+  <div class="courses-grid">
+    <a href="#" class="course-card fade-in">
+      <div class="course-banner banner-html">🌐</div>
+      <div class="course-body">
+        <span class="course-level level-beginner">مبتدئ</span>
+        <h3 class="course-title">HTML من الصفر</h3>
+        <p class="course-desc">تعلم هيكل صفحات الويب من البداية — العناصر، النماذج، الجداول، والـ Semantic HTML.</p>
+        <div class="course-meta">
+          <span>⏱ 8 ساعات</span>
+          <span>📚 42 درس</span>
+          <span>🆓 مجاني</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="course-card fade-in">
+      <div class="course-banner banner-css">🎨</div>
+      <div class="course-body">
+        <span class="course-level level-beginner">مبتدئ</span>
+        <h3 class="course-title">CSS وتصميم الويب</h3>
+        <p class="course-desc">Flexbox، Grid، Animations، وResponsive Design — حوّل صفحاتك لتحف فنية.</p>
+        <div class="course-meta">
+          <span>⏱ 12 ساعة</span>
+          <span>📚 58 درس</span>
+          <span>🆓 مجاني</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="course-card fade-in">
+      <div class="course-banner banner-js">⚡</div>
+      <div class="course-body">
+        <span class="course-level level-mid">متوسط</span>
+        <h3 class="course-title">JavaScript الشامل</h3>
+        <p class="course-desc">من الأساسيات للـ ES6+ والـ DOM وAPIs. اجعل صفحاتك تفاعلية ومميزة.</p>
+        <div class="course-meta">
+          <span>⏱ 20 ساعة</span>
+          <span>📚 80 درس</span>
+          <span>💎 مميز</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="course-card fade-in">
+      <div class="course-banner banner-php">🐘</div>
+      <div class="course-body">
+        <span class="course-level level-mid">متوسط</span>
+        <h3 class="course-title">PHP وتطوير الخلفية</h3>
+        <p class="course-desc">OOP، Database، Sessions، وبناء APIs. الأساس لكل مشروع ويب ديناميكي.</p>
+        <div class="course-meta">
+          <span>⏱ 18 ساعة</span>
+          <span>📚 72 درس</span>
+          <span>💎 مميز</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="course-card fade-in">
+      <div class="course-banner banner-py">🐍</div>
+      <div class="course-body">
+        <span class="course-level level-mid">متوسط</span>
+        <h3 class="course-title">Python للمبتدئين</h3>
+        <p class="course-desc">أسهل لغة برمجة للبدء — من الأساسيات للـ Data Science والـ Automation.</p>
+        <div class="course-meta">
+          <span>⏱ 15 ساعة</span>
+          <span>📚 65 درس</span>
+          <span>💎 مميز</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="course-card fade-in">
+      <div class="course-banner banner-sql">🗄️</div>
+      <div class="course-body">
+        <span class="course-level level-advanced">متقدم</span>
+        <h3 class="course-title">MySQL وقواعد البيانات</h3>
+        <p class="course-desc">تصميم قواعد البيانات، Queries، Joins، وتحسين الأداء — أساس كل تطبيق.</p>
+        <div class="course-meta">
+          <span>⏱ 14 ساعة</span>
+          <span>📚 55 درس</span>
+          <span>💎 مميز</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- LEARNING PATH -->
+<section id="path">
+  <span class="section-label fade-in">// مسار التعلم</span>
+  <h2 class="section-title fade-in">خطواتك نحو الاحتراف</h2>
+  <p class="section-desc fade-in">مسار واضح ومنظم — اتبعه خطوة بخطوة ووصل لهدفك كمطور ويب محترف.</p>
+
+  <div class="path-steps">
+    <div class="path-step fade-in">
+      <div class="step-num step-1">01</div>
+      <div class="step-content">
+        <h3>أساسيات الويب</h3>
+        <p>ابدأ بـ HTML وCSS — تعلم كيف تبني وتصمم صفحات ويب احترافية وتنسقها بشكل متجاوب مع كل الأجهزة.</p>
+        <div class="step-tags">
+          <span class="step-tag">HTML5</span>
+          <span class="step-tag">CSS3</span>
+          <span class="step-tag">Flexbox</span>
+          <span class="step-tag">Grid</span>
+          <span class="step-tag">Responsive</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="path-step fade-in">
+      <div class="step-num step-2">02</div>
+      <div class="step-content">
+        <h3>البرمجة والخلفية</h3>
+        <p>تعلم PHP وMySQL لبناء تطبيقات ديناميكية — إدارة البيانات، المستخدمين، والمنطق البرمجي.</p>
+        <div class="step-tags">
+          <span class="step-tag">PHP</span>
+          <span class="step-tag">MySQL</span>
+          <span class="step-tag">OOP</span>
+          <span class="step-tag">PDO</span>
+          <span class="step-tag">MVC</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="path-step fade-in">
+      <div class="step-num step-3">03</div>
+      <div class="step-content">
+        <h3>الأطر والمكتبات</h3>
+        <p>انتقل للمستوى التالي مع Laravel وBootstrap — بناء مشاريع ضخمة بكفاءة عالية وكود نظيف.</p>
+        <div class="step-tags">
+          <span class="step-tag">Laravel</span>
+          <span class="step-tag">Bootstrap</span>
+          <span class="step-tag">JavaScript</span>
+          <span class="step-tag">jQuery</span>
+          <span class="step-tag">API</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="path-step fade-in">
+      <div class="step-num step-4">04</div>
+      <div class="step-content">
+        <h3>مشاريع Portfolio واحتراف</h3>
+        <p>ابنِ مشاريع حقيقية تضعها في portfolio قوي — متاجر إلكترونية، أنظمة إدارة، وAPIs كاملة.</p>
+        <div class="step-tags">
+          <span class="step-tag">Portfolio</span>
+          <span class="step-tag">GitHub</span>
+          <span class="step-tag">Deployment</span>
+          <span class="step-tag">Docker</span>
+          <span class="step-tag">DevOps</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <span class="section-label fade-in">// آراء الطلاب</span>
+  <h2 class="section-title fade-in">قالوا عن CodeLearn</h2>
+  <p class="section-desc fade-in">آلاف الطلاب غيّروا مساراتهم المهنية بفضل CodeLearn.</p>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"بدأت من الصفر وبعد 6 أشهر بقيت بشتغل كـ PHP developer. المنصة دي غيّرت حياتي المهنية بالكامل. الشرح واضح جداً والمشاريع العملية بتثبّت المعلومة."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar avatar-1">👨‍💻</div>
+        <div>
+          <div class="author-name">أحمد السيد</div>
+          <div class="author-role">PHP Developer — القاهرة</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"كنت خايف أتعلم برمجة لأني مالقيتش محتوى عربي كويس. CodeLearn حلّت المشكلة دي بالكامل — محتوى عربي احترافي بمستوى عالمي."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar avatar-2">👩‍💻</div>
+        <div>
+          <div class="author-name">سارة محمود</div>
+          <div class="author-role">Frontend Developer — الإسكندرية</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"المسار المنظم ده وفّر عليّ وقت كتير. بدل ما أضيع في محتوى عشوائي، اتبعت الخطوات وخلصت كل المستوى الأول في شهر بس."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar avatar-3">👨‍🎓</div>
+        <div>
+          <div class="author-name">عمر خالد</div>
+          <div class="author-role">طالب هندسة — المنصورة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-glow"></div>
+  <h2 class="fade-in">مستنى إيه؟ ابدأ رحلتك <span class="highlight">دلوقتي</span></h2>
+  <p class="fade-in">أول 30 يوم مجاني — مفيش كارت ائتمان مطلوب</p>
+  <a href="#courses" class="btn-primary fade-in">ابدأ التعلم مجاناً</a>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <span class="section-label fade-in">// تواصل معنا</span>
+  <h2 class="section-title fade-in">عندك سؤال؟</h2>
+
+  <div class="contact-grid">
+    <div class="contact-info fade-in">
+      <h3>احنا هنا نساعدك</h3>
+      <p>سواء كان عندك سؤال عن كورس معين أو محتاج مساعدة في اختيار مسارك — فريقنا جاهز يساعدك.</p>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <span>hello@codelearn.ar</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <span>مجموعة واتساب — دعم فوري</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <span>القاهرة، مصر</span>
+      </div>
+    </div>
+
+    <div class="contact-form fade-in">
+      <div class="form-group">
+        <label>الاسم الكامل</label>
+        <input type="text" placeholder="اكتب اسمك هنا...">
+      </div>
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" placeholder="example@email.com">
+      </div>
+      <div class="form-group">
+        <label>الموضوع</label>
+        <select>
+          <option>اختر الموضوع</option>
+          <option>سؤال عن كورس</option>
+          <option>مشكلة تقنية</option>
+          <option>اقتراح</option>
+          <option>أخرى</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>رسالتك</label>
+        <textarea placeholder="اكتب رسالتك هنا..."></textarea>
+      </div>
+      <a href="#" class="btn-primary" style="display:inline-block;">إرسال الرسالة</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo"><span class="logo-bracket">{</span>CodeLearn<span class="logo-bracket">}</span></a>
+      <p>منصة تعليمية عربية متخصصة في تعليم البرمجة وتطوير الويب — من المبتدئين للمحترفين.</p>
+    </div>
+    <div class="footer-col">
+      <h4>الكورسات</h4>
+      <ul>
+        <li><a href="#">HTML & CSS</a></li>
+        <li><a href="#">JavaScript</a></li>
+        <li><a href="#">PHP</a></li>
+        <li><a href="#">MySQL</a></li>
+        <li><a href="#">Laravel</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>المنصة</h4>
+      <ul>
+        <li><a href="#">عن CodeLearn</a></li>
+        <li><a href="#">المدرسون</a></li>
+        <li><a href="#">مسار التعلم</a></li>
+        <li><a href="#">المجتمع</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>مساعدة</h4>
+      <ul>
+        <li><a href="#">الأسئلة الشائعة</a></li>
+        <li><a href="#">تواصل معنا</a></li>
+        <li><a href="#">سياسة الخصوصية</a></li>
+        <li><a href="#">الشروط والأحكام</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 CodeLearn. جميع الحقوق محفوظة.</span>
+    <div class="social-links">
+      <a href="#" class="social-link">𝕏</a>
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">yt</a>
+      <a href="#" class="social-link">fb</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

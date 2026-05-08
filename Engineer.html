@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع الشخصي | عبد الله فرج - مطور لارافيل</title>
+    <style>
+        /* 1. الجماليات الأساسية وإعدادات الصفحة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth; /* حركة ناعمة عند الانتقال بين الأقسام */
+        }
+
+        :root {
+            --primary: #1e3c72;   /* الأزرق الداكن الأساسي */
+            --secondary: #2a5298; /* الأزرق الفاتح للدرجات */
+            --accent: #ff9f43;    /* البرتقالي للتفاعل والتميز */
+            --light: #f8f9fa;     /* خلفية فاتحة */
+            --dark: #2c3e50;      /* لون نص داكن */
+            --white: #ffffff;
+        }
+
+        body { 
+            background-color: var(--light); 
+            color: var(--dark); 
+            line-height: 1.6; 
+            overflow-x: hidden; /* منع التمرير الأفقي */
+        }
+
+        /* 2. القائمة العلوية الثابتة (Sticky Navbar) */
+        nav {
+            background: var(--white);
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        nav .logo { 
+            font-size: 26px; 
+            font-weight: bold; 
+            color: var(--primary); 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav ul li a { 
+            text-decoration: none; 
+            color: var(--dark); 
+            font-weight: 500; 
+            font-size: 16px;
+            transition: 0.3s; 
+        }
+        nav ul li a:hover { color: var(--accent); }
+
+        /* 3. قسم الهيرو (Hero Section) */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 180px 10% 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 { font-size: 4.5rem; margin-bottom: 15px; font-weight: 800; line-height: 1.2; }
+        .hero p { font-size: 1.6rem; margin-bottom: 40px; opacity: 0.9; font-weight: 300; }
+        .hero .btn {
+            padding: 18px 50px;
+            background: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s ease;
+            display: inline-block;
+        }
+        .hero .btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(255,159,67,0.5); 
+        }
+        /* تنسيق قسم المهارات المتقدم */
+        .skills-advanced {
+            padding: 100px 10%;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .skill-category {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .skill-category h3 {
+            margin-bottom: 25px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-item span {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eef2f7;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: 1s ease-in-out;
+        }
+
+        .icon { margin-left: 10px; font-style: normal; }
+        /* 4. قسم "عني" (About Section) مع الصورة الشخصية */
+        .about { 
+            padding: 120px 10%; 
+            display: flex; 
+            align-items: center; 
+            gap: 60px; 
+            background: var(--white); 
+        }
+        
+        .about-img-container {
+            flex-shrink: 0;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%; /* شكل دائري للصورة */
+            overflow: hidden;
+            border: 10px solid var(--light);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .about-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* لضمان ملء الصورة للدائرة دون تشويه */
+            display: block;
+        }
+
+        .about-content { flex: 1; }
+        .about h2 { font-size: 36px; color: var(--primary); margin-bottom: 25px; font-weight: 700; }
+        .about p { font-size: 17px; color: #555; margin-bottom: 20px; text-align: justify; }
+
+        /* 5. شريط الأرقام الإحصائية (Stats Counter) */
+        .stats {
+            background: var(--primary);
+            color: var(--white);
+            padding: 80px 10%;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .stat-item { flex: 1; min-width: 200px; }
+        .stat-item h3 { font-size: 50px; color: var(--accent); font-weight: 800; margin-bottom: 5px; }
+        .stat-item p { font-size: 18px; opacity: 0.8; font-weight: 400; }
+
+        /* 6. قسم المشاريع (Portfolio Gallery) - شبكة ضخمة ومحسنة */
+        .portfolio { padding: 120px 10%; text-align: center; background-color: var(--light); }
+        .portfolio h2 { margin-bottom: 15px; font-size: 40px; color: var(--dark); font-weight: 700; }
+        .portfolio > p { margin-bottom: 70px; font-size: 18px; color: #666; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        .gallery { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 40px; 
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: 0.4s ease;
+            text-align: right; /* محاذاة النص لليمين داخل الكارت */
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover { 
+            transform: translateY(-12px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+        }
+
+        .project-img { 
+            height: 220px; 
+            background: #eee; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 60px; 
+            color: var(--primary);
+            border-bottom: 1px solid #eee;
+        }
+
+        .project-info { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-info h3 { font-size: 22px; color: var(--primary); margin-bottom: 12px; font-weight: 600; }
+        .project-info p { font-size: 15px; color: #666; margin-bottom: 20px; flex-grow: 1; }
+
+        .tag-container { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .tag { padding: 5px 12px; background: #eef2f7; color: var(--secondary); border-radius: 20px; font-size: 12px; font-weight: bold; }
+
+        .project-link {
+            font-size: 14px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .project-link:hover { text-decoration: underline; }
+
+        /* 7. التذييل الاحترافي (Modern Footer) */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 10% 50px;
+            text-align: center;
+        }
+        footer h3 { font-size: 30px; margin-bottom: 15px; font-weight: 700; }
+        footer > p { font-size: 17px; opacity: 0.8; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        
+        .social-links { 
+            margin: 0 0 50px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 25px; 
+            flex-wrap: wrap;
+        }
+        .social-links a { 
+            color: var(--white); 
+            text-decoration: none; 
+            font-size: 16px; 
+            font-weight: 500;
+            padding: 10px 25px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .social-links a:hover { 
+            background: var(--accent); 
+            border-color: var(--accent); 
+            color: var(--dark); 
+        }
+
+        footer .copyright { font-size: 14px; opacity: 0.6; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+        /* 8. التجاوب مع الموبايل (Responsive Design) */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .about { flex-direction: column; text-align: center; gap: 40px; }
+            .about-img-container { width: 250px; height: 250px; }
+            .about p { text-align: center; }
+            nav ul { gap: 15px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.2rem; }
+            nav { flex-direction: column; padding: 15px; gap: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .stats { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Abdullah.Dev</div>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#about">عني</a></li>
+            <li><a href="#projects">مشاريعي</a></li>
+            <li><a href="#contact">اتصل بي</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>أهلاً، أنا عبد الله فرج</h1>
+        <p>خبير تطوير تطبيقات الويب (PHP Laravel Developer)</p>
+        <a href="#projects" class="btn">اكتشف معرض أعمالي</a>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-img-container">
+            <img src="Abdullah.png" alt="عبد الله فرج" class="about-img">
+        </div>
+        <div class="about-content">
+            <h2>شغف بالبرمجة.. تركيز على الأداء</h2>
+            <p>أنا مبرمج Back-end متخصص في بيئة Laravel، أمتلك خبرة عميقة في تحويل الأفكار المعقدة إلى أنظمة ويب قوية، سريعة، وقابلة للتوسع. أركز في عملي على كتابة كود نظيف (Clean Code)، تصميم قواعد بيانات فعالة، وتحسين أداء التطبيقات لضمان أفضل تجربة مستخدم ممكنة.</p>
+            <p>هدفي الدائم هو بناء حلول برمجية مبتكرة تلبي احتياجات الأعمال وتواكب التطور التكنولوجي السريع.</p>
+        </div>
+    </section>
+    <section class="skills-advanced" id="skills">
+        <h2>مهاراتي وخبراتي</h2>
+        <p>توازن بين الإبداع البرمجي والكفاءة الإدارية</p>
+
+        <div class="skills-wrapper">
+            <div class="skill-category">
+                <h3><i class="icon">💻</i> لغات البرمجة والويب</h3>
+                <div class="skill-item">
+                    <span>PHP & Laravel</span>
+                    <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span>HTML5 & CSS3</span>
+                    <div class="progress-bar"><div class="progress" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span>MySQL Database</span>
+                    <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="icon">📊</i> المهارات المكتبية والإدارية</h3>
+                <div class="skill-item">
+                    <span>Microsoft Excel (تحليل بيانات)</span>
+                    <div class="progress-bar"><div class="progress" style="width: 80%; background: #27ae60;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span>Microsoft Word (تقارير تقنية)</span>
+                    <div class="progress-bar"><div class="progress" style="width: 85%; background: #2980b9;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span>PowerPoint (عرض مشاريع)</span>
+                    <div class="progress-bar"><div class="progress" style="width: 75%; background: #e67e22;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat-item"><h3>+15</h3><p>مشاريع حقيقية منجزة</p></div>
+        <div class="stat-item"><h3>+700</h3><p>ساعة برمجة مكثفة</p></div>
+        <div class="stat-item"><h3>+8</h3><p>عملاء وشركات راضية</p></div>
+        <div class="stat-item"><h3>+3</h3><p>سنوات تعلم وتطبيق</p></div>
+    </section>
+
+    <section class="portfolio" id="projects">
+        <h2>معرض مشروعاتي المختارة</h2>
+        <p>لمحة عن التطبيقات والأنظمة التي قمت ببنائها وتطويرها.</p>
+        
+        <div class="gallery">
+            <div class="project-card">
+                <div class="project-img">🛒</div>
+                <div class="project-info">
+                    <div class="tag-container">
+                        <span class="tag">Laravel 10</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                    <h3>متجر إلكتروني متكامل (Multi-Vendor)</h3>
+                    <p>منصة تجارة إلكترونية تتيح لعدة تجار عرض منتجاتهم، مع سلة مشتريات ذكية، بوابة دفع إلكترونية، ونظام لوجستي لمتابعة الشحنات.</p>
+                    <a href="#" class="project-link">عرض التفاصيل ←</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">📱</div>
+                <div class="project-info">
+                    <div class="tag-container">
+                        <span class="tag">Laravel API</span>
+                        <span class="tag">JWT Auth</span>
+                        <span class="tag">Redis</span>
+                    </div>
+                    <h3>RESTful API لتطبيق موبايل</h3>
+                    <p>تطوير واجهة برمجية آمنة وسريعة لتطبيق خدمة توصيل، تدعم التتبع الحي للشحنات، نظام إشعارات لحظي، وإدارة المستخدمين.</p>
+                    <a href="#" class="project-link">استكشاف الكود ←</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">🏥</div>
+                <div class="project-info">
+                    <div class="tag-container">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Livewire</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                    <h3>نظام إدارة المستشفيات (HIMS)</h3>
+                    <p>تطبيق ويب شامل لإدارة حجوزات المرضى، السجلات الطبية الإلكترونية، مواعيد الأطباء، ونظام الفواتير والتقارير المالية.</p>
+                    <a href="#" class="project-link">تجربة الديمو ←</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">💬</div>
+                <div class="project-info">
+                    <div class="tag-container">
+                        <span class="tag">Laravel Echo</span>
+                        <span class="tag">Pusher</span>
+                        <span class="tag">Spatie Roles</span>
+                    </div>
+                    <h3>منصة دردشة ودعم فني لحظي</h3>
+                    <p>نظام محادثة فورية مدمج لمواقع الشركات، يتيح لفريق الدعم التواصل المباشر مع العملاء، مع إدارة الصلاحيات وتاريخ المحادثات.</p>
+                    <a href="#" class="project-link">شاهد التطبيق الحقيقي ←</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">📊</div>
+                <div class="project-info">
+                    <div class="tag-container">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Charts.js</span>
+                        <span class="tag">Excel Import</span>
+                    </div>
+                    <h3>أداة تحليل بيانات المبيعات</h3>
+                    <p>تطبيق ويب يستورد ملفات Excel الضخمة، ويقوم بمعالجة البيانات وتوليد تقارير ولوحات تحكم تفاعلية لعرض مؤشرات الأداء الرئيسية (KPIs).</p>
+                    <a href="#" class="project-link">عرض التقرير العينة ←</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">📰</div>
+                <div class="project-info">
+                    <div class="tag-container">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">FilamentPHP</span>
+                        <span class="tag">SEO Tools</span>
+                    </div>
+                    <h3>نظام إدارة محتوى (CMS) مخصص</h3>
+                    <p>بناء مدونة تقنية ومنصة مقالات مخصصة مع لوحة تحكم سهلة الاستخدام، أدوات متقدمة لتحسين محركات البحث، ونظام تصنيفات وعلامات.</p>
+                    <a href="#" class="project-link">زيارة الموقع ←</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h3>هل لديك فكرة مشروع؟</h3>
+        <p>أنا جاهز لتحويل رؤيتك إلى واقع رقمي قوي ومتميز. تواصل معي الآن لنبدأ العمل معاً!</p>
+        
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="#">تواصل عبر WhatsApp</a>
+            <a href="mailto:abdullah@example.com">أرسل إيميل</a>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2026 جميع الحقوق محفوظة لعبد الله فرج - مطور ويب محترف</p>
+        </div>
+    </footer>
+
+</body>
+</html>
