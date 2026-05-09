@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | مبرمج لارافيل</title>
+    <style>
+        /* 1. إعدادات عامة لتصفير المسافات */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex; /* عشان السايد بار والمحتوى ييجوا جنب بعض */
+            min-height: 100vh;
+        }
+
+        /* 2. القائمة الجانبية (Sidebar) */
+        .sidebar {
+            width: 260px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed; /* تثبيت القائمة على اليمين */
+            height: 100%;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #3498db;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            border-bottom: 1px solid #34495e;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #34495e;
+            padding-right: 30px; /* حركة شيك عند الوقوف بالماوس */
+        }
+
+        /* 3. منطقة المحتوى الرئيسية */
+        .main-content {
+            flex: 1;
+            margin-right: 260px; /* مسافة عشان الكلام ميبقاش تحت السايد بار */
+            padding: 30px;
+        }
+
+        /* 4. كروت الإحصائيات (Stat Cards) */
+        .cards-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #3498db;
+        }
+
+        .card h3 { color: #7f8c8d; font-size: 16px; }
+        .card p { font-size: 28px; font-weight: bold; color: #2c3e50; }
+
+        /* 5. الجدول */
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th, table td {
+            text-align: right;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        table th { background-color: #f8f9fa; color: #2c3e50; }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .active { background: #d4edda; color: #155724; }
+        .pending { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>لوحة التحكم</h2>
+        <ul>
+            <li>الرئيسية</li>
+            <li>المنتجات</li>
+            <li>الطلبات</li>
+            <li>المستخدمين</li>
+            <li>الإعدادات</li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        
+        <div class="cards-container">
+            <div class="card">
+                <h3>إجمالي المستخدمين</h3>
+                <p>1,250</p>
+            </div>
+            <div class="card" style="border-top-color: #27ae60;">
+                <h3>المبيعات اليومية</h3>
+                <p>32,000 ج.م</p>
+            </div>
+            <div class="card" style="border-top-color: #e67e22;">
+                <h3>طلبات معلقة</h3>
+                <p>15</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3>آخر المستخدمين المسجلين</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الإيميل</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>عبد الله فرج</td>
+                        <td>abdullah@example.com</td>
+                        <td><span class="status active">نشط</span></td>
+                    </tr>
+                    <tr>
+                        <td>أحمد محمد</td>
+                        <td>ahmed@example.com</td>
+                        <td><span class="status pending">معلق</span></td>
+                    </tr>
+                    <tr>
+                        <td>سارة علي</td>
+                        <td>sara@example.com</td>
+                        <td><span class="status active">نشط</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+</body>
+</html>
+<?php
+session_start();
+$_SESSION['user'] = "Abdullah";
+echo "مرحباً بك يا " . $_SESSION['user'];
+?>
